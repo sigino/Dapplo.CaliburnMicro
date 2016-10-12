@@ -52,7 +52,7 @@ namespace Dapplo.CaliburnMicro.Demo.UseCases.ContextMenu.ViewModels
 	{
 		private static readonly LogSource Log = new LogSource();
 
-		[ImportMany("contextmenu", typeof(IMenuItem))]
+		[ImportMany("contextmenue", typeof(IMenuItem))]
 		private IEnumerable<IMenuItem> ContextMenuItems { get; set; }
 
 		[Import]
@@ -78,21 +78,24 @@ namespace Dapplo.CaliburnMicro.Demo.UseCases.ContextMenu.ViewModels
 			this.BindDisplayName(ContextMenuTranslations, nameof(IContextMenuTranslations.Title));
 
 			var items = ContextMenuItems.ToList();
-			items.Add(new MenuItem
+			if (items.Count > 0)
 			{
-				IsSeparator = true,
-				Id = "Y_Separator"
-			});
-			ConfigureMenuItems(items);
+				items.Add(new MenuItem
+				{
+					IsSeparator = true,
+					Id = "Y_Separator"
+				});
+				ConfigureMenuItems(items);
+				// Make sure the margin is set, do this AFTER the icon are set
+				items.ApplyIconMargin(new Thickness(2, 2, 2, 2));
+			}
 
-			// Make sure the margin is set, do this AFTER the icon are set
-			items.ApplyIconMargin(new Thickness(2, 2, 2, 2));
-			SetIcon(new PackIconMaterial
+			IconFrameworkElement = new PackIconMaterial
 			{
 				Kind = PackIconMaterialKind.Apps,
 				Background = Brushes.White,
 				Foreground = Brushes.Black,
-			});
+			};
 			Show();
 			EventAggregator.Subscribe(this);
 		}

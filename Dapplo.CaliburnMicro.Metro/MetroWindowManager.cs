@@ -36,6 +36,7 @@ using Dapplo.Utils.Embedded;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Dapplo.CaliburnMicro.Extensions;
+using Hardcodet.Wpf.TaskbarNotification;
 
 #endregion
 

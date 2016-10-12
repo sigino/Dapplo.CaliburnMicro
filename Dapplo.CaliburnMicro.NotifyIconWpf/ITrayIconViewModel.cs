@@ -28,6 +28,7 @@
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Windows;
+using System.Windows.Media;
 using Caliburn.Micro;
 using Dapplo.CaliburnMicro.Menu;
 using Dapplo.CaliburnMicro.Tree;
@@ -59,9 +60,14 @@ namespace Dapplo.CaliburnMicro.NotifyIconWpf
 		Icon Icon { get; set; }
 
 		/// <summary>
-		///     Set the Icon to the underlying TrayIcon.Icon, use this to prevent using System.Drawing
+		///     Gives access to the "underlying" TrayIcon.IconSource
 		/// </summary>
-		void SetIcon(FrameworkElement frameworkElement);
+		ImageSource IconSource { get; set; }
+
+		/// <summary>
+		///     Gives access to the "underlying" TrayIcon.IconFrameworkElement
+		/// </summary>
+		FrameworkElement IconFrameworkElement { get; set; }
 
 		/// <summary>
 		///     Show the icon for this ViewModel

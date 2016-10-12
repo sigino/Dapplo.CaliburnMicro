@@ -31,8 +31,8 @@ using System.ComponentModel.Composition;
 using System.Drawing;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 using Caliburn.Micro;
-using Dapplo.CaliburnMicro.Extensions;
 using Dapplo.CaliburnMicro.Menu;
 using Dapplo.CaliburnMicro.Tree;
 using Dapplo.Log.Facade;
@@ -112,11 +112,43 @@ namespace Dapplo.CaliburnMicro.NotifyIconWpf.ViewModels
 		}
 
 		/// <summary>
-		///     Set the Icon to the underlying TrayIcon.Icon, use this to prevent using System.Drawing and always have the correct scaling
+		///     Set the ImageSource to the underlying TrayIcon.Icon
 		/// </summary>
-		public void SetIcon(FrameworkElement frameworkElement)
+		public ImageSource IconSource
 		{
-			Icon = frameworkElement.ToIcon();
+			get
+			{
+				var taskbarIcon = TrayIcon as TaskbarIcon;
+				return taskbarIcon?.IconSource;
+			}
+			set
+			{
+				var taskbarIcon = TrayIcon as TaskbarIcon;
+				if (taskbarIcon != null)
+				{
+					taskbarIcon.IconSource = value;
+				}
+			}
+		}
+
+		/// <summary>
+		///     Set the FrameworkElement to the underlying TrayIcon.Icon
+		/// </summary>
+		public FrameworkElement IconFrameworkElement
+		{
+			get
+			{
+				var taskbarIcon = TrayIcon as TaskbarIcon;
+				return taskbarIcon?.IconFrameworkElement;
+			}
+			set
+			{
+				var taskbarIcon = TrayIcon as TaskbarIcon;
+				if (taskbarIcon != null)
+				{
+					taskbarIcon.IconFrameworkElement = value;
+				}
+			}
 		}
 
 		/// <summary>
