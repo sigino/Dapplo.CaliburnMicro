@@ -21,7 +21,6 @@
 
 #region using
 
-using System.ComponentModel.Composition;
 using Application.Demo.Languages;
 using Application.Demo.Shared;
 using Dapplo.CaliburnMicro.Configuration;
@@ -34,10 +33,8 @@ namespace Application.Demo.UseCases.Configuration.ViewModels
     /// <summary>
     ///     This is just a placeholder, doesn't have a view
     /// </summary>
-    [Export(typeof(IConfigScreen))]
     public sealed class AddonConfigNodeViewModel : ConfigNode
     {   
-        [ImportingConstructor]
         public AddonConfigNodeViewModel(IConfigTranslations configTranslations)
         {
             // automatically update the DisplayName

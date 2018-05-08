@@ -21,7 +21,6 @@
 
 #region using
 
-using System.ComponentModel.Composition;
 using Caliburn.Micro;
 
 #endregion
@@ -33,8 +32,6 @@ namespace Application.Demo.ViewModels
     ///     to prevent exceptions as every time a popup is created a new instance is needed. Later I might add an attibute
     ///     covering this.
     /// </summary>
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class NotificationExampleViewModel : Screen
     {
     }

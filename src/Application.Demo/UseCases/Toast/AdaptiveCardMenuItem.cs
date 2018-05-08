@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Windows;
 using AdaptiveCards;
 using Application.Demo.Languages;
@@ -42,12 +41,11 @@ namespace Application.Demo.UseCases.Toast
     /// <summary>
     ///     This provides the IMenuItem to open the WindowWithMenuViewModel
     /// </summary>
-    [Export("contextmenu", typeof(IMenuItem))]
+    [Menu("contextmenu")]
     public sealed class AdaptiveCardMenuItem : AuthenticatedMenuItem<IMenuItem, Visibility>
     {
         private static readonly LogSource Log = new LogSource();
 
-        [ImportingConstructor]
         public AdaptiveCardMenuItem(
             IEventAggregator eventAggregator,
             IContextMenuTranslations contextMenuTranslations)
@@ -105,7 +103,6 @@ namespace Application.Demo.UseCases.Toast
             };
 
             this.VisibleOnPermissions("Admin");
-
         }
     }
 }

@@ -20,6 +20,7 @@
 //  along with Dapplo.CaliburnMicro. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
 using System;
+using Autofac;
 using Caliburn.Micro;
 using Dapplo.CaliburnMicro.Dapp;
 using Dapplo.CaliburnMicro.Diagnostics.ViewModels;
@@ -45,8 +46,8 @@ namespace Dapplo.CaliburnMicro.Diagnostics
 
         private static void DisplayErrorViewModel(Exception exception)
         {
-            var windowManager = Dapplication.Current.Bootstrapper.GetService(typeof(IWindowManager)) as IWindowManager;
-            var errorViewModel = Dapplication.Current.Bootstrapper.GetService(typeof(ErrorViewModel)) as ErrorViewModel;
+            var windowManager = Dapplication.Current.Bootstrapper.Container.Resolve<IWindowManager>();
+            var errorViewModel = Dapplication.Current.Bootstrapper.Container.Resolve<ErrorViewModel>();
             if (windowManager == null || errorViewModel == null)
             {
                 return;

@@ -22,7 +22,6 @@
 #region using
 
 using System;
-using System.ComponentModel.Composition;
 using System.Windows;
 using System.Windows.Media;
 using Application.Demo.Languages;
@@ -37,10 +36,9 @@ namespace Application.Demo.UseCases.ContextMenu
     /// <summary>
     ///     This will add an extry to the context menu which generates an exception, and causes a popup to show.
     /// </summary>
-    [Export("contextmenu", typeof(IMenuItem))]
+    [Menu("contextmenu")]
     public sealed class CreateErrorMenuItem : ClickableMenuItem
     {
-        [ImportingConstructor]
         public CreateErrorMenuItem(IContextMenuTranslations contextMenuTranslations)
         {
             // automatically update the DisplayName

@@ -21,7 +21,6 @@
 
 #region Usings
 
-using System.ComponentModel.Composition;
 using Caliburn.Micro;
 using Dapplo.CaliburnMicro;
 using Dapplo.CaliburnMicro.ClickOnce;
@@ -33,7 +32,6 @@ namespace Application.Demo.ClickOnce.ViewModels
     /// <summary>
     /// This is the ViewModel for the about
     /// </summary>
-    [Export(typeof(IShell))]
     public sealed class AboutViewModel : Screen, IShell
     {
         /// <summary>
@@ -44,7 +42,6 @@ namespace Application.Demo.ClickOnce.ViewModels
         /// <summary>
         /// Construct the view model
         /// </summary>
-        [ImportingConstructor]
         public AboutViewModel(IClickOnceService clickOnceService)
         {
             ClickOnceService = clickOnceService;

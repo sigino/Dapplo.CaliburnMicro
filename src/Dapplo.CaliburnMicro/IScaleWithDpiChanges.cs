@@ -21,8 +21,6 @@
 
 #region using
 
-using System.Windows.Controls;
-
 #endregion
 
 namespace Dapplo.CaliburnMicro

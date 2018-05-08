@@ -23,7 +23,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using Application.Demo.Languages;
 using Application.Demo.Models;
@@ -40,7 +39,6 @@ namespace Application.Demo.UseCases.Configuration.ViewModels
     ///     The settings view model is, well... for the settings :)
     ///     It is a conductor where one item is active.
     /// </summary>
-    [Export]
     public sealed class ConfigViewModel : Config<IConfigScreen>
     {
         /// <summary>
@@ -53,9 +51,8 @@ namespace Application.Demo.UseCases.Configuration.ViewModels
         /// </summary>
         public ICoreTranslations CoreTranslations { get; }
 
-        [ImportingConstructor]
         public ConfigViewModel(
-            [ImportMany] IEnumerable<Lazy<IConfigScreen>> configScreens,
+            IEnumerable<Lazy<IConfigScreen>> configScreens,
             IConfigTranslations configTranslations,
             ICoreTranslations coreTranslations,
             IDemoConfiguration demoConfiguration)

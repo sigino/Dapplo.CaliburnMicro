@@ -42,10 +42,7 @@ namespace Dapplo.CaliburnMicro.Overlays.ViewModels
         /// <inheritdoc />
         public virtual bool IsHittestable
         {
-            get
-            {
-                return _isHittestable;
-            }
+            get => _isHittestable;
             set
             {
                 _isHittestable = value;
@@ -57,10 +54,7 @@ namespace Dapplo.CaliburnMicro.Overlays.ViewModels
         /// <inheritdoc />
         public virtual double Left
         {
-            get
-            {
-                return _left;
-            }
+            get => _left;
             set
             {
                 _left = value;
@@ -71,10 +65,7 @@ namespace Dapplo.CaliburnMicro.Overlays.ViewModels
         /// <inheritdoc />
         public virtual double Top
         {
-            get
-            {
-                return _top;
-            }
+            get => _top;
             set
             {
                 _top = value;
@@ -90,7 +81,7 @@ namespace Dapplo.CaliburnMicro.Overlays.ViewModels
         /// <inheritdoc />
         public virtual bool IsEnabled
         {
-            get { return _isEnabled; }
+            get => _isEnabled;
             protected set
             {
                 _isEnabled = value;
@@ -101,7 +92,7 @@ namespace Dapplo.CaliburnMicro.Overlays.ViewModels
         /// <inheritdoc />
         public virtual bool IsVisible
         {
-            get { return _isVisible; }
+            get => _isVisible;
             protected set
             {
                 _isVisible = value;

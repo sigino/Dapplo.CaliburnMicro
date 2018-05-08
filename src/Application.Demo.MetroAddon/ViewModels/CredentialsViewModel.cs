@@ -21,7 +21,6 @@
 
 #region using
 
-using System.ComponentModel.Composition;
 using Application.Demo.MetroAddon.Configurations;
 using Application.Demo.Shared;
 using Caliburn.Micro;
@@ -33,7 +32,6 @@ namespace Application.Demo.MetroAddon.ViewModels
     /// <summary>
     ///     A view model for credentials (username / password)
     /// </summary>
-    [Export]
     public class CredentialsViewModel : Screen
     {
         private string _password;
@@ -44,11 +42,16 @@ namespace Application.Demo.MetroAddon.ViewModels
         /// </summary>
         public bool CanLogin => !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
 
-        [Import]
-        public ICoreTranslations CoreTranslations { get; set; }
+        public CredentialsViewModel(ICoreTranslations coreTranslations,
+            ICredentialsTranslations credentialsTranslations)
+        {
+            CoreTranslations = coreTranslations;
+            CredentialsTranslations = credentialsTranslations;
+        }
 
-        [Import]
-        public ICredentialsTranslations CredentialsTranslations { get; set; }
+        public ICoreTranslations CoreTranslations { get; }
+
+        public ICredentialsTranslations CredentialsTranslations { get; }
 
         /// <summary>
         ///     Password for a login

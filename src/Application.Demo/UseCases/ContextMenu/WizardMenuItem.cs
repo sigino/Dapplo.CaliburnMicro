@@ -21,7 +21,6 @@
 
 #region using
 
-using System.ComponentModel.Composition;
 using Application.Demo.Languages;
 using Application.Demo.UseCases.Wizard.ViewModels;
 using Caliburn.Micro;
@@ -37,10 +36,9 @@ namespace Application.Demo.UseCases.ContextMenu
     /// <summary>
     ///     This will add an extry for the wizard to the context menu
     /// </summary>
-    [Export("contextmenu", typeof(IMenuItem))]
+    [Menu("contextmenu")]
     public sealed class WizardMenuItem : AuthenticatedMenuItem<IMenuItem, bool>
     {
-        [ImportingConstructor]
         public WizardMenuItem(
             IContextMenuTranslations contextMenuTranslations,
             IWindowManager windowManager,

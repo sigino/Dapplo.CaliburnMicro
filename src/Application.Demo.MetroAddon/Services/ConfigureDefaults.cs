@@ -22,9 +22,9 @@
 #region using
 
 using System;
-using System.ComponentModel.Composition;
 using Application.Demo.MetroAddon.Configurations;
 using Caliburn.Micro;
+using Dapplo.Addons;
 using Dapplo.CaliburnMicro;
 using Dapplo.CaliburnMicro.Metro;
 
@@ -35,15 +35,13 @@ namespace Application.Demo.MetroAddon.Services
     /// <summary>
     /// Configure some of the CaliburnMicro defaults
     /// </summary>
-    [UiStartupAction(StartupOrder = int.MinValue)]
-    public class ConfigureDefaults : IUiStartupAction
+    [StartupOrder(int.MinValue)]
+    public class ConfigureDefaults : IUiStartup
     {
         private readonly MetroWindowManager _metroWindowManager;
         private readonly IMetroConfiguration _metroConfiguration;
 
-        [ImportingConstructor]
         public ConfigureDefaults(
-            [Import(typeof(IWindowManager))]
             MetroWindowManager metroWindowManager,
             IMetroConfiguration metroConfiguration
             )

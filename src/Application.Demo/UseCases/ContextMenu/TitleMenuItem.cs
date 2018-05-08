@@ -21,7 +21,6 @@
 
 #region using
 
-using System.ComponentModel.Composition;
 using System.Windows.Media;
 using Application.Demo.Languages;
 using Dapplo.CaliburnMicro.Extensions;
@@ -35,14 +34,13 @@ namespace Application.Demo.UseCases.ContextMenu
     /// <summary>
     ///     This will add an extry for the title of the context menu
     /// </summary>
-    [Export("contextmenu", typeof(IMenuItem))]
+    [Menu("contextmenu")]
     public sealed class TitleMenuItem : MenuItem
     {
         /// <summary>
         /// Configure the title menu item
         /// </summary>
         /// <param name="contextMenuTranslations"></param>
-        [ImportingConstructor]
         public TitleMenuItem(IContextMenuTranslations contextMenuTranslations)
         {
             // automatically update the DisplayName

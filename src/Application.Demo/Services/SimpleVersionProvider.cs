@@ -20,7 +20,6 @@
 //  along with Dapplo.CaliburnMicro. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
 using System;
-using System.ComponentModel.Composition;
 using System.Reflection;
 using Dapplo.CaliburnMicro;
 
@@ -29,7 +28,6 @@ namespace Application.Demo.Services
     /// <summary>
     /// A very simple version provider
     /// </summary>
-    [Export(typeof(IVersionProvider))]
     public class SimpleVersionProvider : IVersionProvider
     {
         public Version CurrentVersion { get; set; } = Assembly.GetExecutingAssembly().GetName().Version;

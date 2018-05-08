@@ -19,21 +19,20 @@
 // 
 //  You should have a copy of the GNU Lesser General Public License
 //  along with Dapplo.CaliburnMicro. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
-#endregion
+#endregion 
 
-using System.ComponentModel;
 
 namespace Dapplo.CaliburnMicro
 {
     /// <summary>
-    ///     Meta-data belonging to the UiStartupActionAttribute, which makes it possible to specify type-safe meta-data.
+    /// Marker interface for UI Services, every class exported with this interface is automatically shutdown right before CaliburnMicro is.
     /// </summary>
-    public interface IUiStartupMetadata
+    public interface IUiShutdown
     {
         /// <summary>
-        ///     Order in which IUiStartupAction.Start is called
+        ///     Perform a shutdown of whatever needs to be shutdown.
+        ///     Make sure this can be called multiple times, e.g. do nothing when it was already started.
         /// </summary>
-        [DefaultValue(1)]
-        int StartupOrder { get; }
+        void Shutdown();
     }
 }

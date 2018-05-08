@@ -20,7 +20,6 @@
 //  along with Dapplo.CaliburnMicro. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
 using Dapplo.CaliburnMicro.Behaviors;
-using System.ComponentModel.Composition;
 using System.Windows;
 
 namespace Dapplo.CaliburnMicro.Configurers
@@ -28,8 +27,6 @@ namespace Dapplo.CaliburnMicro.Configurers
     /// <summary>
     /// This takes care that windows become their icons
     /// </summary>
-    [Export(typeof(IConfigureWindowViews))]
-    [Export(typeof(IConfigureDialogViews))]
     public class IconViewConfigurer : IConfigureWindowViews, IConfigureDialogViews
     {
         /// <inheritdoc />

@@ -21,7 +21,6 @@
 
 #region using
 
-using System.ComponentModel.Composition;
 using System.Windows;
 using System.Windows.Media;
 using Application.Demo.Languages;
@@ -36,10 +35,9 @@ namespace Application.Demo.UseCases.ContextMenu
     /// <summary>
     ///     This will add an extry for the exit to the context menu
     /// </summary>
-    [Export("contextmenu", typeof(IMenuItem))]
+    [Menu("contextmenu")]
     public sealed class ExitMenuItem : ClickableMenuItem
     {
-        [ImportingConstructor]
         public ExitMenuItem(IContextMenuTranslations contextMenuTranslations)
         {
             // automatically update the DisplayName

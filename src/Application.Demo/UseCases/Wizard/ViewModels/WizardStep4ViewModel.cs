@@ -22,7 +22,6 @@
 #region using
 
 using System;
-using System.ComponentModel.Composition;
 using Application.Demo.Languages;
 using Dapplo.CaliburnMicro.Extensions;
 using Dapplo.CaliburnMicro.Wizard;
@@ -31,18 +30,17 @@ using Dapplo.CaliburnMicro.Wizard;
 
 namespace Application.Demo.UseCases.Wizard.ViewModels
 {
-    [Export(typeof(IWizardScreen))]
     public sealed class WizardStep4ViewModel : WizardScreen<WizardExampleViewModel>
     {
         private IDisposable _displayNameUpdater;
 
-        public WizardStep4ViewModel()
+        public WizardStep4ViewModel(IWizardTranslations wizardTranslations)
         {
+            WizardTranslations = wizardTranslations;
             Order = 4;
         }
-
-        [Import]
-        public IWizardTranslations WizardTranslations { get; set; }
+        
+        public IWizardTranslations WizardTranslations { get; }
 
         public override void Initialize()
         {

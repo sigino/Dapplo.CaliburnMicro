@@ -21,9 +21,6 @@
 
 #region using
 
-using System;
-using System.ComponentModel.Composition;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapplo.Addons;
@@ -36,12 +33,9 @@ namespace Dapplo.CaliburnMicro.Translations.Services
     /// <summary>
     ///     This registers a ServiceProviderExportProvider for providing ILanguage
     /// </summary>
-    [StartupAction(StartupOrder = int.MinValue)]
-    public class LanguageStartup : IAsyncStartupAction
+    [StartupOrder(int.MinValue)]
+    public class LanguageStartup : IStartupAsync
     {
-        [Import]
-        private IApplicationBootstrapper ApplicationBootstrapper { get; set; }
-
         /// <summary>
         /// async Start of the LanguageLoader
         /// </summary>
@@ -49,19 +43,7 @@ namespace Dapplo.CaliburnMicro.Translations.Services
         /// <returns>Task</returns>
         public async Task StartAsync(CancellationToken cancellationToken = new CancellationToken())
         {
-            var languageLoader = LanguageLoader.Current;
-            if (languageLoader == null)
-            {
-                languageLoader = LanguageLoader.Current ?? new LanguageLoader(ApplicationBootstrapper.ApplicationName);
-                await languageLoader.LoadIfNeededAsync(cancellationToken).ConfigureAwait(false);
-            }
-            ApplicationBootstrapper.Export<IServiceProvider>(languageLoader);
-
-            var s = ApplicationBootstrapper.GetExports<IServiceProvider>();
-            if (!s.Any())
-            {
-                throw new ChangeRejectedException("Couldn't export IServiceProvider");
-            }
+            await LanguageLoader.Current.LoadIfNeededAsync(cancellationToken).ConfigureAwait(false);
         }
     }
 }

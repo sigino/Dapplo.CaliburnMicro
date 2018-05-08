@@ -22,10 +22,12 @@
 #region using
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Windows;
+using Dapplo.Addons.Bootstrapper.Resolving;
 using Dapplo.CaliburnMicro.Dapp;
 using Dapplo.CaliburnMicro.Diagnostics;
 #if DEBUG
@@ -64,18 +66,24 @@ namespace Application.Demo
             {
                 ShutdownMode = ShutdownMode.OnExplicitShutdown
             };
+
+            var scanDirectories = new List<string>
+            {
+                FileLocations.StartupDirectory,
 #if DEBUG
-            application.Bootstrapper.AddScanDirectory(@"..\..\..\Application.Demo.Addon\bin\Debug");
-            application.Bootstrapper.AddScanDirectory(@"..\..\..\Application.Demo.MetroAddon\bin\Debug");
-            application.Bootstrapper.AddScanDirectory(@"..\..\..\Application.Demo.OverlayAddon\bin\Debug");
+                @"..\..\..\Application.Demo.Addon\bin\Debug",
+                @"..\..\..\Application.Demo.MetroAddon\bin\Debug",
+                @"..\..\..\Application.Demo.OverlayAddon\bin\Debug"
 #else
-            application.Bootstrapper.AddScanDirectory(@"..\..\..\Application.Demo.Addon\bin\Release");
-            application.Bootstrapper.AddScanDirectory(@"..\..\..\Application.Demo.MetroAddon\bin\Release");
-            application.Bootstrapper.AddScanDirectory(@"..\..\..\Application.Demo.OverlayAddon\bin\Release");
+                @"..\..\..\Application.Demo.Addon\bin\Release",
+                @"..\..\..\Application.Demo.MetroAddon\bin\Release",
+                @"..\..\..\Application.Demo.OverlayAddon\bin\Release"
 #endif
+            };
+            var assemblies = FileLocations.Scan(scanDirectories, "Application.Demo.*.dll");
 
             // Load the Application.Demo.* assemblies
-            application.Bootstrapper.FindAndLoadAssemblies("Application.Demo.*");
+            application.Bootstrapper.LoadAssemblies(assemblies);
             // Handle exceptions
             application.DisplayErrorView();
             application.Run();

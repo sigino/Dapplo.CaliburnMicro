@@ -22,7 +22,7 @@
 #region using
 
 using System;
-using System.ComponentModel.Composition;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +30,8 @@ using Caliburn.Micro;
 using Dapplo.Log;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using Dapplo.Addons.Bootstrapper.Resolving;
+using Dapplo.CaliburnMicro.Configuration;
+
 #endregion
 
 namespace Dapplo.CaliburnMicro.Metro
@@ -45,7 +46,6 @@ namespace Dapplo.CaliburnMicro.Metro
     ///     For more information see <a href="https://gist.github.com/ButchersBoy/4a7272f3ac104c5b1a54">here</a> and
     ///     <a href="https://dragablz.net/2015/05/29/using-mahapps-dialog-boxes-in-a-mvvm-setup/">here</a>
     /// </summary>
-    [Export(typeof(IWindowManager))]
     public sealed class MetroWindowManager : DapploWindowManager
     {
         private static readonly LogSource Log = new LogSource();
@@ -54,12 +54,6 @@ namespace Dapplo.CaliburnMicro.Metro
         {
             "Colors", "Fonts", "Controls", "Controls.AnimatedSingleRowTabControl"
         };
-
-        /// <summary>
-        ///     Export the IDialogCoordinator of MahApps, so ViewModels can open MahApps dialogs
-        /// </summary>
-        [Export]
-        public IDialogCoordinator MahAppsDialogCoordinator => DialogCoordinator.Instance;
 
         /// <summary>
         ///     The current theme
@@ -74,7 +68,10 @@ namespace Dapplo.CaliburnMicro.Metro
         /// <summary>
         /// Default constructor taking care of initialization
         /// </summary>
-        public MetroWindowManager()
+        public MetroWindowManager(IEnumerable<IConfigureWindowViews> configureWindows,
+            IEnumerable<IConfigureDialogViews> configureDialogs,
+            IUiConfiguration uiConfiguration = null
+        ) : base(configureWindows, configureDialogs, uiConfiguration)
         {
             foreach (var style in Styles)
             {
@@ -109,7 +106,7 @@ namespace Dapplo.CaliburnMicro.Metro
         {
             var packUri = CreateMahappStyleUri(style);
             // TODO: Fix resource checking, needing Dapplo.Addons.Bootstrapper just for this check??
-            if (!packUri.EmbeddedResourceExists())
+            if (false) //!packUri.EmbeddedResourceExists())
             {
                 Log.Warn().WriteLine("Style {0} might not be available as {1}.", style, packUri);
             }

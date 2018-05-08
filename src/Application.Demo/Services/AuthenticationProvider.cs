@@ -21,7 +21,6 @@
 
 #region using
 
-using System.ComponentModel.Composition;
 using Dapplo.CaliburnMicro.Security;
 
 #endregion
@@ -32,7 +31,6 @@ namespace Application.Demo.Services
     ///     This exports a IAuthenticationProvider, which is used to show or hide elements in the UI depending on the available
     ///     rights
     /// </summary>
-    [Export(typeof(IAuthenticationProvider))]
     public class AuthenticationProvider : SimpleAuthenticationProvider
     {
         public AuthenticationProvider()

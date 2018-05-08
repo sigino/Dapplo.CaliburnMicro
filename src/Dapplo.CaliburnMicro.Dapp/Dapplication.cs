@@ -26,8 +26,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using Dapplo.Addons;
+using Autofac;
 using Dapplo.Addons.Bootstrapper;
+using Dapplo.Addons.Bootstrapper.Resolving;
 using Dapplo.CaliburnMicro.Extensions;
 using Dapplo.Log;
 using Dapplo.Utils;
@@ -43,7 +44,7 @@ namespace Dapplo.CaliburnMicro.Dapp
     public sealed class Dapplication : Application
     {
         private static readonly LogSource Log = new LogSource();
-
+        private CaliburnMicroBootstrapper _caliburnMicroBootstrapper;
         private readonly ApplicationBootstrapper _bootstrapper;
 
         /// <summary>
@@ -60,8 +61,6 @@ namespace Dapplo.CaliburnMicro.Dapp
         /// <param name="global">Is the mutex a global or local block (false means only in this Windows session)</param>
         public Dapplication(string applicationName, string mutexId = null, bool global = false) : this(new ApplicationBootstrapper(applicationName, mutexId, global))
         {
-            // Set the Thread name, is better than "1"
-            Thread.CurrentThread.Name = applicationName;
         }
 
         /// <summary>
@@ -71,9 +70,6 @@ namespace Dapplo.CaliburnMicro.Dapp
         public Dapplication(ApplicationBootstrapper applicationBootstrapper)
         {
             _bootstrapper = applicationBootstrapper;
-
-            // Enable the cleaning of double assemblies, this makes sure doubles are deleted, solves Costura issues
-            _bootstrapper.AllowAssemblyCleanup = true;
 
             Current = this;
             // Hook unhandled exceptions in the Dispatcher
@@ -95,12 +91,12 @@ namespace Dapplo.CaliburnMicro.Dapp
         /// <summary>
         ///     Allows access to the Dapplo.Addons.ApplicationBootstrapper
         /// </summary>
-        public IBootstrapper Bootstrapper => _bootstrapper;
+        public ApplicationBootstrapper Bootstrapper => _bootstrapper;
 
         /// <summary>
         /// Returns true if the application was already running, only works when a mutex is used
         /// </summary>
-        public bool WasAlreadyRunning => !_bootstrapper.IsMutexLocked;
+        public bool WasAlreadyRunning => _bootstrapper.IsAlreadyRunning;
 
         /// <summary>
         ///     Access the current Dapplication
@@ -127,25 +123,25 @@ namespace Dapplo.CaliburnMicro.Dapp
             // This only works here, not before the Application is started and not later
             UiContext.Initialize();
             
+            _bootstrapper.Configure();
+
+            // Register the UI SynchronizationContext, this can be retrieved by specifying the name "ui" for the argument
+            _bootstrapper.Builder.RegisterInstance(SynchronizationContext.Current).Named<SynchronizationContext>("ui");
+            _bootstrapper.Builder.RegisterInstance(TaskScheduler.FromCurrentSynchronizationContext()).Named<TaskScheduler>("ui");
+
             // Load the Dapplo.CaliburnMicro.* assemblies
-            _bootstrapper.FindAndLoadAssemblies("Dapplo.CaliburnMicro*");
+            _bootstrapper.LoadAssemblies(FileLocations.Scan(new[] { FileLocations.StartupDirectory }, "Dapplo.CaliburnMicro*.dll"));
 
             // Prepare the bootstrapper
             await _bootstrapper.InitializeAsync().ConfigureAwait(true);
 
-            // Export the UI SynchronizationContext, this can be retrieved by specifying:
-            // [Import("ui", typeof(SynchronizationContext))] on a SynchronizationContext property / constructor argument
-            _bootstrapper.Export("ui", SynchronizationContext.Current);
-            // Export the UI TaskScheduler, this can be retrieved by specifying:
-            // [Import("ui", typeof(TaskScheduler))] on a TaskScheduler property / constructor argument
-            _bootstrapper.Export("ui", TaskScheduler.FromCurrentSynchronizationContext());
-
             // The following makes sure that Caliburn.Micro is correctly initialized on the right thread and Execute.OnUIThread works
-            var caliburnBootstrapper = _bootstrapper.GetExport<CaliburnMicroBootstrapper>().Value;
-            caliburnBootstrapper.Initialize();
+            // Very important to do this, after all assemblies are loaded!
+            _caliburnMicroBootstrapper = new CaliburnMicroBootstrapper(_bootstrapper);
+            _caliburnMicroBootstrapper.Initialize();
 
             // Now check if there is a lock, if so we invoke OnAlreadyRunning and return
-            if (!_bootstrapper.IsMutexLocked)
+            if (_bootstrapper.IsAlreadyRunning)
             {
                 var exitCode = OnAlreadyRunning?.Invoke() ?? -1;
                 Shutdown(exitCode);
@@ -153,7 +149,7 @@ namespace Dapplo.CaliburnMicro.Dapp
             }
 
             // Start Dapplo, do not use configure-await false here, so the OnStartup doesn't have any issues
-            await _bootstrapper.RunAsync().ConfigureAwait(true);
+            await _bootstrapper.StartupAsync().ConfigureAwait(true);
 
             // This also triggers the Caliburn.Micro.BootstrapperBase.OnStartup
             base.OnStartup(e);
@@ -174,10 +170,10 @@ namespace Dapplo.CaliburnMicro.Dapp
             // Unhook unhandled exceptions in tasks
             TaskScheduler.UnobservedTaskException -= HandleTaskException;
 
-            if (_bootstrapper.IsInitialized)
-            {
-                await _bootstrapper.StopAsync().ConfigureAwait(false);
-            }
+            // Shutdown Caliburn Micro
+            await _caliburnMicroBootstrapper.ShutdownAsync().ConfigureAwait(true);
+
+            await _bootstrapper.ShutdownAsync().ConfigureAwait(false);
             // Make sure everything is disposed (and all disposables which were registered via _bootstrapper.RegisterForDisposal() are called)
             _bootstrapper.Dispose();
         }
