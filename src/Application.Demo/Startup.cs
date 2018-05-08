@@ -30,8 +30,9 @@ using System.Windows;
 using Dapplo.Addons.Bootstrapper.Resolving;
 using Dapplo.CaliburnMicro.Dapp;
 using Dapplo.CaliburnMicro.Diagnostics;
-#if DEBUG
 using Dapplo.Log;
+
+#if DEBUG
 using Dapplo.Log.Loggers;
 #endif
 
