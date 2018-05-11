@@ -53,10 +53,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.CaliburnMicro.ClickO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Demo.ClickOnce", "Application.Demo.ClickOnce\Application.Demo.ClickOnce.csproj", "{624DDF67-6E89-443D-86EA-CBCDFFAAE07C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Addons", "Dapplo.Addons\Dapplo.Addons.csproj", "{BD6B2425-92E5-48C4-82BD-C2AAFE454DF2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Addons.Bootstrapper", "Dapplo.Addons.Bootstrapper\Dapplo.Addons.Bootstrapper.csproj", "{F1F6C18F-1FBC-4D0B-AAC4-6C53110EEA15}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -149,14 +145,6 @@ Global
 		{9311CFAD-8EAB-4148-BD84-6E2728CF912A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{624DDF67-6E89-443D-86EA-CBCDFFAAE07C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{624DDF67-6E89-443D-86EA-CBCDFFAAE07C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD6B2425-92E5-48C4-82BD-C2AAFE454DF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD6B2425-92E5-48C4-82BD-C2AAFE454DF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD6B2425-92E5-48C4-82BD-C2AAFE454DF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD6B2425-92E5-48C4-82BD-C2AAFE454DF2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F1F6C18F-1FBC-4D0B-AAC4-6C53110EEA15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1F6C18F-1FBC-4D0B-AAC4-6C53110EEA15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1F6C18F-1FBC-4D0B-AAC4-6C53110EEA15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1F6C18F-1FBC-4D0B-AAC4-6C53110EEA15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,6 +25,9 @@ var isPullRequest = !string.IsNullOrEmpty(EnvironmentVariable("APPVEYOR_PULL_REQ
 // Check if the commit is marked as release
 var isRelease = (EnvironmentVariable("APPVEYOR_REPO_COMMIT_MESSAGE_EXTENDED")?? "").Contains("[release]");
 
+// Branch name
+var branch = EnvironmentVariable("APPVEYOR_REPO_BRANCH");
+
 Task("Default")
     .IsDependentOn("Publish");
 
@@ -239,7 +242,7 @@ Task("AssemblyVersion")
         var assemblyInfo = ParseAssemblyInfo(assemblyInfoFile.FullPath);
         CreateAssemblyInfo(assemblyInfoFile.FullPath, new AssemblyInfoSettings {
             Version = version,
-            InformationalVersion = version,
+            InformationalVersion = version + (branch == "master" ? "" : "-beta"),
             FileVersion = version,
 
             CLSCompliant = assemblyInfo.ClsCompliant,
