@@ -8,7 +8,7 @@ namespace Dapplo.CaliburnMicro.Configuration.Services
     /// <summary>
     /// This makes sure the configuration is loaded
     /// </summary>
-    [StartupOrder(int.MinValue), ShutdownOrder(int.MaxValue)]
+    [ServiceOrder(int.MinValue, int.MaxValue)]
     public class IniSectionStartup : IStartupAsync, IShutdownAsync
     {
         /// <inheritdoc />

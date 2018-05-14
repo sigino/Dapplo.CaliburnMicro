@@ -217,6 +217,7 @@ Task("GitLink")
 	FilePath pdbGitPath = Context.Tools.Resolve("PdbGit.exe");
 	var pdbFiles = GetFiles("./**/*.pdb")
 		.Where(p => !p.FullPath.ToLower().Contains("test"))
+		.Where(p => p.FullPath.ToLower().Contains("Caliburn"))
 		.Where(p => !p.FullPath.ToLower().Contains("tools"))
 		.Where(p => !p.FullPath.ToLower().Contains("packages"))
 		.Where(p => !p.FullPath.ToLower().Contains("example"));

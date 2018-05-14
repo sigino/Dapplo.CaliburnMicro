@@ -8,7 +8,7 @@ namespace Application.Demo.Services
     /// <summary>
     /// Shows a toast when the application starts
     /// </summary>
-    [StartupOrder(int.MaxValue)]
+    [ServiceOrder(int.MaxValue)]
     public class NotifyOfStartupReady : IUiStartup
     {
         private readonly ToastConductor _toastConductor;

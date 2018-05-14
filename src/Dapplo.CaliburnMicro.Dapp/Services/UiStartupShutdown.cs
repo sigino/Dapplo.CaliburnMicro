@@ -35,22 +35,21 @@ namespace Dapplo.CaliburnMicro.Dapp.Services
     /// <summary>
     /// This takes care of showing the shell(s)
     /// </summary>
-    [StartupOrder((int)CaliburnStartOrder.Shell)]
-    [ShutdownOrder((int)CaliburnStartOrder.Shell)]
+    [ServiceOrder(CaliburnStartOrder.Shell, CaliburnStartOrder.Shell)]
     public class UiStartupShutdown : IStartupAsync, IShutdownAsync
     {
         private static readonly LogSource Log = new LogSource();
         private readonly IWindowManager _windowManager;
         private readonly IEnumerable<Lazy<IShell>> _shells;
-        private readonly IEnumerable<Lazy<IUiStartup, StartupOrderAttribute>> _uiStartupModules;
-        private readonly IEnumerable<Lazy<IUiShutdown, ShutdownOrderAttribute>> _uiShutdownModules;
+        private readonly IEnumerable<Lazy<IUiStartup, ServiceOrderAttribute>> _uiStartupModules;
+        private readonly IEnumerable<Lazy<IUiShutdown, ServiceOrderAttribute>> _uiShutdownModules;
 
         /// <inheritdoc />
         public UiStartupShutdown(
             IWindowManager windowManager,
             IEnumerable<Lazy<IShell>> shells,
-            IEnumerable<Lazy<IUiStartup, StartupOrderAttribute>> uiStartupModules,
-            IEnumerable<Lazy<IUiShutdown, ShutdownOrderAttribute>> uiShutdownModules
+            IEnumerable<Lazy<IUiStartup, ServiceOrderAttribute>> uiStartupModules,
+            IEnumerable<Lazy<IUiShutdown, ServiceOrderAttribute>> uiShutdownModules
             )
         {
             _windowManager = windowManager;

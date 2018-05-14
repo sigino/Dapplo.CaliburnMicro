@@ -42,7 +42,7 @@ namespace Dapplo.CaliburnMicro.Dapp
     ///     An implementation of the Caliburn Micro Bootstrapper which is started from the Dapplo ApplicationBootstrapper (MEF)
     ///     and uses this.
     /// </summary>
-    [ShutdownOrder((int)CaliburnStartOrder.Bootstrapper)]
+    [ServiceOrder(CaliburnStartOrder.Bootstrapper)]
     public class CaliburnMicroBootstrapper : BootstrapperBase, IShutdownAsync
     {
         private readonly ApplicationBootstrapper _bootstrapper;

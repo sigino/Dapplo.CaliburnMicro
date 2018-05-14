@@ -35,7 +35,7 @@ namespace Application.Demo.MetroAddon.Services
     /// <summary>
     /// Configure some of the CaliburnMicro defaults
     /// </summary>
-    [StartupOrder(int.MinValue)]
+    [ServiceOrder(int.MinValue)]
     public class ConfigureDefaults : IUiStartup
     {
         private readonly MetroWindowManager _metroWindowManager;

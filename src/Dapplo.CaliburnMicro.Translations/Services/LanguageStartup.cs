@@ -33,7 +33,7 @@ namespace Dapplo.CaliburnMicro.Translations.Services
     /// <summary>
     ///     This registers a ServiceProviderExportProvider for providing ILanguage
     /// </summary>
-    [StartupOrder(int.MinValue)]
+    [ServiceOrder(int.MinValue)]
     public class LanguageStartup : IStartupAsync
     {
         /// <summary>

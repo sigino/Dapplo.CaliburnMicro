@@ -36,7 +36,7 @@ namespace Dapplo.CaliburnMicro.ClickOnce
     /// <summary>
     /// This StartupAction takes care of managing ClickOnce applications
     /// </summary>
-    [StartupOrder((int)CaliburnStartOrder.Bootstrapper + 1, AwaitStart = true)]
+    [ServiceOrder((int)CaliburnStartOrder.Bootstrapper + 1, AwaitStart = true)]
     public class ClickOnceService : PropertyChangedBase, IStartup, IClickOnceService, IHandleClickOnceUpdates, IApplyClickOnceUpdates, IHandleClickOnceRestarts
     {
         private static readonly LogSource Log = new LogSource();
