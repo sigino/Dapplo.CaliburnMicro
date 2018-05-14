@@ -63,7 +63,7 @@ namespace Application.Demo.ClickOnce
                 }
             };
             // Load the Application.Demo.* assemblies
-            application.Bootstrapper.FindAndLoadAssemblies("Application.Demo.ClickOnce");
+            application.Bootstrapper.FindAndLoadAssemblies("Application.Demo.*.dll");
             // Handle exceptions
             application.DisplayErrorView();
             application.Run();
