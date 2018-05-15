@@ -10,7 +10,7 @@ namespace Dapplo.CaliburnMicro.ClickOnce
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ClickOnceService>()
-                .As<IStartupMarker>()
+                .As<IService>()
                 .As<IClickOnceService>()
                 .As<IVersionProvider>().SingleInstance();
         }

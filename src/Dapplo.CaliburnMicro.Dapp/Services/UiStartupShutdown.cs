@@ -35,7 +35,7 @@ namespace Dapplo.CaliburnMicro.Dapp.Services
     /// <summary>
     /// This takes care of showing the shell(s)
     /// </summary>
-    [ServiceOrder(CaliburnStartOrder.Shell, CaliburnStartOrder.Shell)]
+    [ServiceOrder(CaliburnStartOrder.Shell)]
     public class UiStartupShutdown : IStartupAsync, IShutdownAsync
     {
         private static readonly LogSource Log = new LogSource();

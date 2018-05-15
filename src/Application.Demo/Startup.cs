@@ -81,10 +81,11 @@ namespace Application.Demo
                 @"..\..\..\Application.Demo.OverlayAddon\bin\Release"
 #endif
             };
-            var assemblies = FileLocations.Scan(scanDirectories, "Application.Demo.*.dll");
-
+            application.Bootstrapper.AddScanDirectories(scanDirectories);
+            // Load the Dapplo.Addons.Config assembly to allow language and ini support
+            application.Bootstrapper.FindAndLoadAssemblies("Dapplo.Addons.Config.dll");
             // Load the Application.Demo.* assemblies
-            application.Bootstrapper.LoadAssemblies(assemblies);
+            application.Bootstrapper.FindAndLoadAssemblies("Application.Demo.*.dll");
             // Handle exceptions
             application.DisplayErrorView();
             application.Run();
