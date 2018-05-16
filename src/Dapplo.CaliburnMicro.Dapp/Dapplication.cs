@@ -28,7 +28,6 @@ using System.Windows;
 using System.Windows.Threading;
 using Autofac;
 using Dapplo.Addons.Bootstrapper;
-using Dapplo.Addons.Bootstrapper.Resolving;
 using Dapplo.CaliburnMicro.Extensions;
 using Dapplo.Log;
 using Dapplo.Utils;
@@ -130,7 +129,7 @@ namespace Dapplo.CaliburnMicro.Dapp
             _bootstrapper.Builder.RegisterInstance(TaskScheduler.FromCurrentSynchronizationContext()).Named<TaskScheduler>("ui");
 
             // Load the Dapplo.CaliburnMicro.* assemblies
-            _bootstrapper.LoadAssemblies(FileLocations.Scan(new[] { FileLocations.StartupDirectory }, "Dapplo.CaliburnMicro*.dll"));
+            _bootstrapper.FindAndLoadAssemblies("Dapplo.CaliburnMicro*");
 
             // Prepare the bootstrapper
             await _bootstrapper.InitializeAsync().ConfigureAwait(true);

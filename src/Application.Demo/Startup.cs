@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Windows;
 using Dapplo.Addons.Bootstrapper.Resolving;
@@ -51,6 +52,24 @@ namespace Application.Demo
         [STAThread]
         public static void Main()
         {
+            var scanDirectories = new List<string>
+            {
+                FileLocations.StartupDirectory,
+#if DEBUG
+                @"..\..\..\Application.Demo.Addon\bin\Debug",
+                @"..\..\..\Application.Demo.MetroAddon\bin\Debug",
+                @"..\..\..\Application.Demo.OverlayAddon\bin\Debug"
+#else
+                @"..\..\..\Application.Demo.Addon\bin\Release",
+                @"..\..\..\Application.Demo.MetroAddon\bin\Release",
+                @"..\..\..\Application.Demo.OverlayAddon\bin\Release"
+#endif
+            };
+            Start(scanDirectories);
+        }
+
+        private static void Start(IEnumerable<string> scanDirectories)
+        {
             // Make sure the log entries are demystified
             LogSettings.ExceptionToStacktrace = exception => exception.ToStringDemystified();
 #if DEBUG
@@ -68,26 +87,17 @@ namespace Application.Demo
                 ShutdownMode = ShutdownMode.OnExplicitShutdown
             };
 
-            var scanDirectories = new List<string>
-            {
-                FileLocations.StartupDirectory,
-#if DEBUG
-                @"..\..\..\Application.Demo.Addon\bin\Debug",
-                @"..\..\..\Application.Demo.MetroAddon\bin\Debug",
-                @"..\..\..\Application.Demo.OverlayAddon\bin\Debug"
-#else
-                @"..\..\..\Application.Demo.Addon\bin\Release",
-                @"..\..\..\Application.Demo.MetroAddon\bin\Release",
-                @"..\..\..\Application.Demo.OverlayAddon\bin\Release"
-#endif
-            };
-            application.Bootstrapper.AddScanDirectories(scanDirectories);
+            // Make sure the bootstrapper knows where to find it's DLL files
+            application.Bootstrapper
+                .AddScanDirectories(scanDirectories)
             // Load the Dapplo.Addons.Config assembly to allow language and ini support
-            application.Bootstrapper.FindAndLoadAssemblies("Dapplo.Addons.Config.dll");
+                .FindAndLoadAssemblies("Dapplo.Addons.Config")
             // Load the Application.Demo.* assemblies
-            application.Bootstrapper.FindAndLoadAssemblies("Application.Demo.*.dll");
+                .FindAndLoadAssemblies("Application.Demo.*");
             // Handle exceptions
             application.DisplayErrorView();
+
+            // Run!!!
             application.Run();
         }
     }
