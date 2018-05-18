@@ -22,6 +22,7 @@
 #region using
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -147,6 +148,7 @@ namespace Dapplo.CaliburnMicro.Dapp
                 return;
             }
 
+            var refs = _bootstrapper.LoadedAssemblies.Where(a => a.GetName().Name == "Dapplo.CaliburnMicro.Metro").First().GetReferencedAssemblies();
             // Start Dapplo, do not use configure-await false here, so the OnStartup doesn't have any issues
             await _bootstrapper.StartupAsync().ConfigureAwait(true);
 

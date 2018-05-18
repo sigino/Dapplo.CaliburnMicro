@@ -27,6 +27,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Caliburn.Micro;
+using Dapplo.Addons;
 using Dapplo.Log;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
@@ -48,6 +49,7 @@ namespace Dapplo.CaliburnMicro.Metro
     /// </summary>
     public sealed class MetroWindowManager : DapploWindowManager
     {
+        private readonly IResourceProvider _resourceProvider;
         private static readonly LogSource Log = new LogSource();
 
         private static readonly string[] Styles =
@@ -68,11 +70,14 @@ namespace Dapplo.CaliburnMicro.Metro
         /// <summary>
         /// Default constructor taking care of initialization
         /// </summary>
-        public MetroWindowManager(IEnumerable<IConfigureWindowViews> configureWindows,
+        public MetroWindowManager(
+            IEnumerable<IConfigureWindowViews> configureWindows,
             IEnumerable<IConfigureDialogViews> configureDialogs,
+            IResourceProvider resourceProvider,
             IUiConfiguration uiConfiguration = null
         ) : base(configureWindows, configureDialogs, uiConfiguration)
         {
+            _resourceProvider = resourceProvider;
             foreach (var style in Styles)
             {
                 AddMahappsStyle(style);
@@ -106,7 +111,7 @@ namespace Dapplo.CaliburnMicro.Metro
         {
             var packUri = CreateMahappStyleUri(style);
             // TODO: Fix resource checking, needing Dapplo.Addons.Bootstrapper just for this check??
-            if (false) //!packUri.EmbeddedResourceExists())
+            if (!_resourceProvider.EmbeddedResourceExists(packUri))
             {
                 Log.Warn().WriteLine("Style {0} might not be available as {1}.", style, packUri);
             }

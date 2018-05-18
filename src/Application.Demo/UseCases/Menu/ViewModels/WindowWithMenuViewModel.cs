@@ -38,6 +38,9 @@ using Dapplo.CaliburnMicro.Menu;
 
 namespace Application.Demo.UseCases.Menu.ViewModels
 {
+    /// <summary>
+    /// A window with menu
+    /// </summary>
     public sealed class WindowWithMenuViewModel : Screen, IDisposable, IMaintainPosition
     {
         private readonly IMenuTranslations _menuTranslations;
