@@ -1,13 +1,14 @@
 ﻿using Application.Demo.MetroAddon.Services;
 using Application.Demo.MetroAddon.ViewModels;
 using Autofac;
+using Dapplo.Addons;
 using Dapplo.CaliburnMicro;
 using Dapplo.CaliburnMicro.Configuration;
 
 namespace Application.Demo.MetroAddon
 {
     /// <inheritdoc />
-    public class MetroAddonModule : Module
+    public class MetroAddonModule : AddonModule
     {
         protected override void Load(ContainerBuilder builder)
         {

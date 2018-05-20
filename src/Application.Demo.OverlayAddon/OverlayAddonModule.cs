@@ -1,6 +1,7 @@
 ﻿using Application.Demo.OverlayAddon.ViewModels;
 using Autofac;
 using Autofac.Features.AttributeFilters;
+using Dapplo.Addons;
 using Dapplo.CaliburnMicro.Menu;
 using Dapplo.CaliburnMicro.Overlays;
 using Dapplo.Log;
@@ -8,7 +9,7 @@ using Dapplo.Log;
 namespace Application.Demo.OverlayAddon
 {
     /// <inheritdoc />
-    public class OverlayAddonAutofacModule : Module
+    public class OverlayAddonModule : AddonModule
     {
         private static readonly LogSource Log = new LogSource();
         /// <inheritdoc />

@@ -1,5 +1,5 @@
 ﻿//  Dapplo - building blocks for desktop applications
-//  Copyright (C) 2016-2017 Dapplo
+//  Copyright (C) 2016-2018 Dapplo
 // 
 //  For more information see: http://dapplo.net/
 //  Dapplo repositories are hosted on GitHub: https://github.com/dapplo
@@ -20,33 +20,19 @@
 //  along with Dapplo.CaliburnMicro. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
 
 using Autofac;
-using Caliburn.Micro;
 using Dapplo.Addons;
-using Dapplo.CaliburnMicro.Dapp.Services;
 
-namespace Dapplo.CaliburnMicro.Dapp
+namespace Dapplo.CaliburnMicro.Security.ActiveDirectory
 {
     /// <inheritdoc />
-    public class CaliburnMicroAutofacModule : Module
+    public class ActiveDirectoryAddonModule : AddonModule
     {
         /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<UiStartupShutdown>()
-                .As<IService>()
-                .SingleInstance();
-
-
-            // Export the DapploWindowManager if no other IWindowManager is registered
-            builder.RegisterType<DapploWindowManager>()
-                .As<IWindowManager>()
-                .IfNotRegistered(typeof(IWindowManager))
-                .SingleInstance();
-
-            // Export the EventAggregator if no other IEventAggregator is registered
-            builder.RegisterType<EventAggregator>()
-                .As<IEventAggregator>()
-                .IfNotRegistered(typeof(IEventAggregator))
+            builder.RegisterType<ActiveDirectoryAuthenticationProvider>()
+                .As<IAuthenticationProvider>()
+                .AsSelf()
                 .SingleInstance();
         }
     }

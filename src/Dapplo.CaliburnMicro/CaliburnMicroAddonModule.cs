@@ -1,11 +1,12 @@
 ﻿using Autofac;
 using Caliburn.Micro;
+using Dapplo.Addons;
 using Dapplo.CaliburnMicro.Configurers;
 
 namespace Dapplo.CaliburnMicro
 {
     /// <inheritdoc />
-    public class CaliburnMicroAutofacModule : Module
+    public class CaliburnMicroAddonModule : AddonModule
     {
         /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
