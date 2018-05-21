@@ -99,6 +99,8 @@ namespace Application.Demo
                 .AsSelf();
             builder.RegisterType<NotificationExampleViewModel>()
                 .AsSelf();
+
+            base.Load(builder);
         }
     }
 }

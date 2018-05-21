@@ -34,6 +34,8 @@ namespace Dapplo.CaliburnMicro.Security.ActiveDirectory
                 .As<IAuthenticationProvider>()
                 .AsSelf()
                 .SingleInstance();
+
+            base.Load(builder);
         }
     }
 }

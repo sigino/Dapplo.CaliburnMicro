@@ -48,6 +48,8 @@ namespace Dapplo.CaliburnMicro.Dapp
                 .As<IEventAggregator>()
                 .IfNotRegistered(typeof(IEventAggregator))
                 .SingleInstance();
+
+            base.Load(builder);
         }
     }
 }

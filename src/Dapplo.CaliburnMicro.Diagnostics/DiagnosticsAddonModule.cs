@@ -38,6 +38,7 @@ namespace Dapplo.CaliburnMicro.Diagnostics
                 ErrorTranslations = context.ResolveOptional<IErrorTranslations>()
             });
 
+            base.Load(builder);
         }
     }
 }

@@ -10,12 +10,14 @@ namespace Application.Demo.MetroAddon
     /// <inheritdoc />
     public class MetroAddonModule : AddonModule
     {
+        /// <inheritdoc />
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<ConfigureDefaults>().As<IUiStartup>().SingleInstance();
             builder.RegisterType<CredentialsViewModel>().AsSelf().SingleInstance();
             builder.RegisterType<ThemeConfigViewModel>().As<IConfigScreen>().SingleInstance();
 
+            base.Load(builder);
         }
     }
 }

@@ -40,6 +40,7 @@ namespace Dapplo.CaliburnMicro.Metro
             // Register the IDialogCoordinator of MahApps, so ViewModels can open MahApps dialogs
             builder.RegisterInstance(DialogCoordinator.Instance).As<IDialogCoordinator>().SingleInstance();
 
+            base.Load(builder);
         }
     }
 }

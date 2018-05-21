@@ -34,6 +34,8 @@ namespace Dapplo.CaliburnMicro.NotifyIconWpf
                 .As<IService>()
                 .As<ITrayIconManager>()
                 .SingleInstance();
+
+            base.Load(builder);
         }
     }
 }

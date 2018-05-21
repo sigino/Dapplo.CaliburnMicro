@@ -17,6 +17,8 @@ namespace Application.Demo.ClickOnce
             builder.RegisterType<AboutViewModel>()
                 .As<IShell>()
                 .SingleInstance();
+
+            base.Load(builder);
         }
     }
 }

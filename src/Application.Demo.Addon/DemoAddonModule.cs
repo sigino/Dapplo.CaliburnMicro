@@ -4,6 +4,9 @@ using Dapplo.CaliburnMicro.Configuration;
 
 namespace Application.Demo.Addon
 {
+    /// <summary>
+    /// Setup the demo addon
+    /// </summary>
     public class DemoAddonModule : AddonModule
     {
         protected override void Load(ContainerBuilder builder)
@@ -13,6 +16,7 @@ namespace Application.Demo.Addon
                 .As<IConfigScreen>()
                 .SingleInstance();
 
+            base.Load(builder);
         }
     }
 }

@@ -34,6 +34,8 @@ namespace Dapplo.CaliburnMicro.ClickOnce
                 .As<IService>()
                 .As<IClickOnceService>()
                 .As<IVersionProvider>().SingleInstance();
+
+            base.Load(builder);
         }
     }
 }

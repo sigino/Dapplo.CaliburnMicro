@@ -34,6 +34,8 @@ namespace Dapplo.CaliburnMicro.Toasts
                 .As<IUiStartup>()
                 .AsSelf()
                 .SingleInstance();
+
+            base.Load(builder);
         }
     }
 }
