@@ -22,7 +22,6 @@
 #region using
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -53,23 +52,14 @@ namespace Dapplo.CaliburnMicro.Dapp
         ///     Additionally the current or a matching IniConfig and LanguageLoader are added to help resoving confiration and
         ///     language imports.
         /// </summary>
-        /// <param name="applicationName">Name of your application</param>
-        /// <param name="mutexId">
-        ///     string with an ID for your mutex, preferably a Guid. If the mutex can't be locked, the
-        ///     bootstapper will not  be able to "bootstrap".
-        /// </param>
-        /// <param name="global">Is the mutex a global or local block (false means only in this Windows session)</param>
-        public Dapplication(string applicationName, string mutexId = null, bool global = false) : this(new ApplicationBootstrapper(applicationName, mutexId, global))
+        /// <param name="applicationConfig">ApplicationConfig</param>
+        public Dapplication(ApplicationConfig applicationConfig)
         {
-        }
 
-        /// <summary>
-        ///     Create the Dapplication for the ApplicationBootstrapper
-        /// </summary>
-        /// <param name="applicationBootstrapper">a configured ApplicationBootstrapper</param>
-        public Dapplication(ApplicationBootstrapper applicationBootstrapper)
-        {
-            _bootstrapper = applicationBootstrapper;
+            // Load the Dapplo.CaliburnMicro.* assemblies
+            applicationConfig.WithAssemblyPatterns("Dapplo.CaliburnMicro*");
+
+            _bootstrapper = new ApplicationBootstrapper(applicationConfig);
 
             Current = this;
             // Hook unhandled exceptions in the Dispatcher
@@ -129,9 +119,6 @@ namespace Dapplo.CaliburnMicro.Dapp
             _bootstrapper.Builder.RegisterInstance(SynchronizationContext.Current).Named<SynchronizationContext>("ui");
             _bootstrapper.Builder.RegisterInstance(TaskScheduler.FromCurrentSynchronizationContext()).Named<TaskScheduler>("ui");
 
-            // Load the Dapplo.CaliburnMicro.* assemblies
-            _bootstrapper.FindAndLoadAssemblies("Dapplo.CaliburnMicro*");
-
             // Prepare the bootstrapper
             await _bootstrapper.InitializeAsync().ConfigureAwait(true);
 
@@ -148,7 +135,6 @@ namespace Dapplo.CaliburnMicro.Dapp
                 return;
             }
 
-            var refs = _bootstrapper.LoadedAssemblies.Where(a => a.GetName().Name == "Dapplo.CaliburnMicro.Metro").First().GetReferencedAssemblies();
             // Start Dapplo, do not use configure-await false here, so the OnStartup doesn't have any issues
             await _bootstrapper.StartupAsync().ConfigureAwait(true);
 
